@@ -69,6 +69,30 @@ public class Hasq {
         }
         return null;
     }
+
+    class solution{
+        public static int getLongestSubarray(int []a,int k){
+            HashMap<Integer,Integer> map = new HashMap<>();
+            int n =  a.length;
+            int sum = 0;
+            int maxLength = 0;
+            for(int i = 0;i<n;i++){
+                sum += a[i];
+                if (sum == k) {
+                    maxLength = Math.max(maxLength, i+1);
+                }
+                int remainingIndex = sum-k;
+                if (map.containsKey(rem)) {
+                    int len = i - map.get(rem);
+                    maxLength = Math.max(maxLength, len);
+                }
+                if (!map.containsKey(sum)) {
+                    map.put(sum, i);
+                }
+            }
+            return maxLength;
+        }
+    }
    
     public static void main(String[] args) {
         int num[] = { 1, 3, 2, 5, 1, 3, 1, 5, 1 };
