@@ -80,7 +80,7 @@ public class Hasq {
             if (sum == k) {
                 maxLength = Math.max(maxLength, i + 1);
             }
-            int remainingIndex = sum - k;
+            int rem = sum - k; // remaining index sum
             if (map.containsKey(rem)) {
                 int len = i - map.get(rem);
                 maxLength = Math.max(maxLength, len);
