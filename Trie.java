@@ -39,14 +39,29 @@ public class Trie {
         }
         return true;
     }
+    public static boolean wordBreak(String key){
+        if (key.length() == 0) {
+            return true;
+        }
+        for(int i = 1;i<=key.length();i++){
+            String firstPart = key.substring(0,i);
+            String secPart = key.substring(i);
+            if (search(firstPart) && wordBreak(secPart)) {
+                return true;
+            }
+        }
+        return false;
+    }
     public static void main(String[] args) {
-        String word[] = {"the","a","there" ,"their","any"};
+        String word[] = {"i","like","sam" ,"samsung","mobile"};
+        String key = "ilikesamsung";
         for (int i = 0; i < word.length; i++) {
             insert(word[i]);
         }
-       System.out.println(search("their"));
-       System.out.println(search("there"));
-       System.out.println(search("a"));
-       System.out.println(search("an"));
+    //    System.out.println(search("their"));
+    //    System.out.println(search("there"));
+    //    System.out.println(search("a"));
+    //    System.out.println(search("an"));
+    System.out.println(wordBreak(key));
     }
 }
