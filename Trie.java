@@ -1,8 +1,9 @@
 public class Trie {
-    static class Node{
+    static class Node {
         Node children[];
         boolean endOfWord;
-        public Node(){
+
+        public Node() {
             children = new Node[26];
             for (int i = 0; i < 26; i++) {
                 children[i] = null;
@@ -10,8 +11,10 @@ public class Trie {
             endOfWord = false;
         }
     }
+
     static Node root = new Node();
-    public static void insert(String word){
+
+    public static void insert(String word) {
         Node Current = root;
         for (int i = 0; i < word.length(); i++) {
             int idx = word.charAt(i) - 'a';
@@ -25,26 +28,28 @@ public class Trie {
             Current = Current.children[idx];
         }
     }
-    public static boolean search(String word){
+
+    public static boolean search(String word) {
         Node Current = root;
         for (int i = 0; i < word.length(); i++) {
             int idx = word.charAt(i) - 'a';
             if (Current.children[idx] == null) {
                 return false;
             }
-            if (i == word.length()-1 && Current.children[idx].endOfWord == false) {
+            if (i == word.length() - 1 && Current.children[idx].endOfWord == false) {
                 return false;
             }
             Current = Current.children[idx];
         }
         return true;
     }
-    public static boolean wordBreak(String key){
+
+    public static boolean wordBreak(String key) {
         if (key.length() == 0) {
             return true;
         }
-        for(int i = 1;i<=key.length();i++){
-            String firstPart = key.substring(0,i);
+        for (int i = 1; i <= key.length(); i++) {
+            String firstPart = key.substring(0, i);
             String secPart = key.substring(i);
             if (search(firstPart) && wordBreak(secPart)) {
                 return true;
@@ -52,16 +57,48 @@ public class Trie {
         }
         return false;
     }
-    public static void main(String[] args) {
-        String word[] = {"i","like","sam" ,"samsung","mobile"};
-        String key = "ilikesamsung";
-        for (int i = 0; i < word.length; i++) {
-            insert(word[i]);
+
+    public static boolean startsWith(String word) {
+        Node curr = root;
+        for (int i = 0; i < word.length(); i++) {
+            int idx = word.charAt(i) - 'a';
+            if (curr.children[idx] == null) {
+                return false;
+            }
+            curr = curr.children[idx];
         }
-    //    System.out.println(search("their"));
-    //    System.out.println(search("there"));
-    //    System.out.println(search("a"));
-    //    System.out.println(search("an"));
-    System.out.println(wordBreak(key));
+        return true;
+    }
+
+    public static int countNode(Node root){
+        if (root == null) {
+            return 0;
+        }
+        int count = 0;
+        for (int i = 0; i < 26; i++) {
+            count += countNode(root.children[i]);
+        }
+        return count+1;
+    }
+
+    public static void main(String[] args) {
+    //     String word[] = {"i","like","sam" ,"samsung","mobile"};
+    //     String key = "ilikesamsung";
+    //     for (int i = 0; i < word.length; i++) {
+    //         insert(word[i]);
+    //     }
+    // //    System.out.println(search("their"));
+    // //    System.out.println(search("there"));
+    // //    System.out.println(search("a"));
+    // //    System.out.println(search("an"));
+    // System.out.println(wordBreak(key));
+    // System.out.println(startsWith("op"));
+       String str = "ababa";
+
+    for (int i = 0; i < str.length(); i++) {
+        String subString = str.substring(i);
+        insert(subString);
+    }
+    System.out.println(countNode(root));
     }
 }
