@@ -80,7 +80,22 @@ public class Trie {
         }
         return count+1;
     }
-
+    public static String ans = "";
+    public static void longestPrefix(Node root,StringBuilder temp){
+        if (root == null) {
+            return;
+        }
+        for (int i = 0; i < 26; i++) {
+            if (root.children[i] != null && root.children[i].endOfWord == true) {
+                temp.append((char)(i+'a'));
+                if (temp.length() > ans.length()) {
+                    ans = temp.toString();
+                }
+                longestPrefix(root.children[i], temp);
+                temp = temp.deleteCharAt(temp.length() - 1);
+            }
+        }
+    }
     public static void main(String[] args) {
     //     String word[] = {"i","like","sam" ,"samsung","mobile"};
     //     String key = "ilikesamsung";
@@ -93,12 +108,18 @@ public class Trie {
     // //    System.out.println(search("an"));
     // System.out.println(wordBreak(key));
     // System.out.println(startsWith("op"));
-       String str = "ababa";
+    //    String str = "ababa";
 
-    for (int i = 0; i < str.length(); i++) {
-        String subString = str.substring(i);
-        insert(subString);
+    // for (int i = 0; i < str.length(); i++) {
+    //     String subString = str.substring(i);
+    //     insert(subString);
+    // }
+    // System.out.println(countNode(root));
+    String word[] = {"a","banana","app" ,"appl","ap","apply","apple"};
+    for (int i = 0; i < word.length; i++) {
+        insert(word[i]);
     }
-    System.out.println(countNode(root));
+    longestPrefix(root, new StringBuilder(""));
+    System.out.println(ans);
     }
 }
