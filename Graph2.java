@@ -91,6 +91,8 @@ public class Graph2 {
             }
         }
     }
+
+    
     public static void main(String[] args) {
         int v = 7;
         boolean visited[] = new boolean[v];
